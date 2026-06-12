@@ -21,3 +21,10 @@ management:
 
 server:
   port: 8080
+
+jwt:
+  # Override with a strong random secret in production via JWT_SECRET env var.
+  # Dev default: base64("dev-secret-key-that-is-long-enough-for-hmac-sha256-signing-algorithm") — 68 bytes, safe for HS256.
+  secret: ${JWT_SECRET:ZGV2LXNlY3JldC1rZXktdGhhdC1pcy1sb25nLWVub3VnaC1mb3ItaHMyNTYtc2lnbmluZy1hbGdvcml0aG0=}
+  expiration: ${JWT_EXPIRATION:900000}               # 15 minutes
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000}  # 7 days
