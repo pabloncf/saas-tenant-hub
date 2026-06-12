@@ -57,4 +57,6 @@ public class OrganizationMember {
     public Organization getOrganization() { return organization; }
     public User getUser() { return user; }
     public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
+    public OffsetDateTime getCreatedAt() { return createdAt; }
 }

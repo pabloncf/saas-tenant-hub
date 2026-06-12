@@ -22,6 +22,12 @@ management:
 server:
   port: 8080
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
 jwt:
   # Override with a strong random secret in production via JWT_SECRET env var.
   # Dev default: base64("dev-secret-key-that-is-long-enough-for-hmac-sha256-signing-algorithm") — 68 bytes, safe for HS256.
