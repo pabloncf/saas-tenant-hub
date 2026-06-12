@@ -1,14 +1,17 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/saas_dashboard
-    username: saas_user
-    password: saas_pass
+    username: saas_app
+    password: saas_app_pass
   jpa:
     show-sql: true
     properties:
       hibernate:
         format_sql: true
   flyway:
+    # Flyway uses the admin user to run DDL migrations (saas_app cannot CREATE TABLE)
+    user: saas_user
+    password: saas_pass
     clean-on-validation-error: true
 
 management:

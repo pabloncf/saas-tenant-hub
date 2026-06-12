@@ -1,7 +1,10 @@
 spring:
   datasource:
     url: jdbc:postgresql://postgres:5432/saas_dashboard
-    username: saas_user
+    username: saas_app
+    password: saas_app_pass
+  flyway:
+    user: saas_user
     password: saas_pass
 
 logging:
