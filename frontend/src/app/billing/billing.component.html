@@ -1,0 +1,45 @@
+<div class="page">
+  <header class="page__header">
+    <h1 class="page__title">Billing</h1>
+  </header>
+
+  @if (loading) {
+    <div class="loading">Loading…</div>
+  } @else if (error) {
+    <div class="alert alert--error">{{ error }}</div>
+  } @else if (status) {
+    <div class="billing-current">
+      <div class="tier-badge tier-badge--{{ status.tier.toLowerCase() }}">{{ status.tier }}</div>
+      <div class="billing-limits">
+        <span>Up to <strong>{{ status.max_projects === 2147483647 ? '∞' : status.max_projects }}</strong> projects</span>
+        <span>Up to <strong>{{ status.max_members === 2147483647 ? '∞' : status.max_members }}</strong> members</span>
+      </div>
+      @if (status.stripe_customer_id) {
+        <button class="btn btn--ghost" (click)="openPortal()" [disabled]="portalLoading">
+          {{ portalLoading ? 'Redirecting…' : 'Manage subscription →' }}
+        </button>
+      }
+    </div>
+
+    @if (status.tier === 'FREE') {
+      <div class="plans">
+        <div class="plan-card">
+          <h3 class="plan-card__name">Pro</h3>
+          <p class="plan-card__desc">50 projects · 25 members</p>
+          <button class="btn btn--primary" (click)="upgrade('PRO')"
+                  [disabled]="checkoutLoading === 'PRO'">
+            {{ checkoutLoading === 'PRO' ? 'Redirecting…' : 'Upgrade to Pro' }}
+          </button>
+        </div>
+        <div class="plan-card plan-card--featured">
+          <h3 class="plan-card__name">Enterprise</h3>
+          <p class="plan-card__desc">Unlimited projects · Unlimited members</p>
+          <button class="btn btn--primary" (click)="upgrade('ENTERPRISE')"
+                  [disabled]="checkoutLoading === 'ENTERPRISE'">
+            {{ checkoutLoading === 'ENTERPRISE' ? 'Redirecting…' : 'Upgrade to Enterprise' }}
+          </button>
+        </div>
+      </div>
+    }
+  }
+</div>

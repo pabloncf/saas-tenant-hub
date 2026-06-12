@@ -1,0 +1,47 @@
+<div class="page">
+  <header class="page__header">
+    <h1 class="page__title">{{ isEdit ? 'Edit project' : 'New project' }}</h1>
+  </header>
+
+  @if (error) {
+    <div class="alert alert--error">{{ error }}</div>
+  }
+
+  <div class="form-card">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="field">
+        <label class="field__label" for="name">Name <span class="field__required">*</span></label>
+        <input id="name" type="text" formControlName="name" class="field__input"
+               placeholder="My awesome project" />
+        @if (form.get('name')?.invalid && form.get('name')?.touched) {
+          <span class="field__error">Name is required</span>
+        }
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="description">Description</label>
+        <textarea id="description" formControlName="description" class="field__input field__textarea"
+                  rows="4" placeholder="What is this project about?"></textarea>
+      </div>
+
+      @if (isEdit) {
+        <div class="field">
+          <label class="field__label" for="status">Status</label>
+          <select id="status" formControlName="status" class="field__input">
+            <option value="ACTIVE">Active</option>
+            <option value="PAUSED">Paused</option>
+            <option value="DONE">Done</option>
+            <option value="ARCHIVED">Archived</option>
+          </select>
+        </div>
+      }
+
+      <div class="form-card__actions">
+        <a routerLink="/projects" class="btn btn--ghost">Cancel</a>
+        <button type="submit" class="btn btn--primary" [disabled]="loading || form.invalid">
+          {{ loading ? 'Saving…' : (isEdit ? 'Save changes' : 'Create project') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

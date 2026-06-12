@@ -1,0 +1,33 @@
+<aside class="sidebar">
+  <div class="sidebar__logo">
+    <span class="sidebar__logo-mark">S</span>
+    <span class="sidebar__logo-text">SaaSHub</span>
+  </div>
+
+  <nav class="sidebar__nav">
+    <a routerLink="/dashboard"  routerLinkActive="active" class="sidebar__link">
+      <span class="sidebar__icon">▦</span> Dashboard
+    </a>
+    <a routerLink="/projects"   routerLinkActive="active" class="sidebar__link">
+      <span class="sidebar__icon">◫</span> Projects
+    </a>
+
+    @if ((auth.user$ | async)?.role === 'OWNER' || (auth.user$ | async)?.role === 'ADMIN') {
+      <a routerLink="/members" routerLinkActive="active" class="sidebar__link">
+        <span class="sidebar__icon">◎</span> Members
+      </a>
+      <a routerLink="/billing" routerLinkActive="active" class="sidebar__link">
+        <span class="sidebar__icon">◈</span> Billing
+      </a>
+    }
+  </nav>
+
+  <div class="sidebar__footer">
+    @if (auth.currentUser; as user) {
+      <div class="sidebar__user">
+        <span class="sidebar__role-badge">{{ user.role }}</span>
+      </div>
+    }
+    <button class="sidebar__logout" (click)="auth.logout()">Sign out</button>
+  </div>
+</aside>

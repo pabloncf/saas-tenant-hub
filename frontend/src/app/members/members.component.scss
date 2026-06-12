@@ -1,0 +1,25 @@
+.role-select {
+  padding: 4px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  font-size: 12.5px;
+  background: var(--color-surface);
+  cursor: pointer;
+}
+
+.badge--you {
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 20px;
+  margin-left: 6px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.badge--role {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}

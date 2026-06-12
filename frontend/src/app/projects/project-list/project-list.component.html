@@ -1,0 +1,69 @@
+<div class="page">
+  <header class="page__header">
+    <h1 class="page__title">Projects</h1>
+    <a routerLink="/projects/new" class="btn btn--primary">+ New project</a>
+  </header>
+
+  <div class="toolbar">
+    <input type="search" class="field__input toolbar__search"
+           placeholder="Search projects…"
+           [(ngModel)]="search" (keyup.enter)="onSearch()" />
+    <select class="field__input toolbar__filter"
+            [(ngModel)]="filterStatus" (change)="onSearch()">
+      <option value="">All statuses</option>
+      <option value="ACTIVE">Active</option>
+      <option value="PAUSED">Paused</option>
+      <option value="DONE">Done</option>
+      <option value="ARCHIVED">Archived</option>
+    </select>
+  </div>
+
+  @if (loading) {
+    <div class="loading">Loading…</div>
+  } @else if (error) {
+    <div class="alert alert--error">{{ error }}</div>
+  } @else if (projects.length === 0) {
+    <div class="empty-state">
+      <p>No projects found.</p>
+      <a routerLink="/projects/new" class="btn btn--primary">Create your first project</a>
+    </div>
+  } @else {
+    <div class="table-card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of projects; track p.id) {
+            <tr>
+              <td class="table__name">{{ p.name }}</td>
+              <td>
+                <span class="badge badge--{{ p.status.toLowerCase() }}">
+                  {{ statusLabel(p.status) }}
+                </span>
+              </td>
+              <td class="table__date">{{ p.created_at | date:'MMM d, y' }}</td>
+              <td class="table__actions">
+                <a [routerLink]="['/projects', p.id, 'edit']" class="link">Edit</a>
+                <button class="link link--danger" (click)="delete(p)">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (meta && meta.total_pages > 1) {
+      <div class="pagination">
+        <button class="btn btn--ghost" (click)="prevPage()" [disabled]="page === 0">← Prev</button>
+        <span class="pagination__info">Page {{ page + 1 }} of {{ meta.total_pages }}</span>
+        <button class="btn btn--ghost" (click)="nextPage()" [disabled]="!hasNext()">Next →</button>
+      </div>
+    }
+  }
+</div>

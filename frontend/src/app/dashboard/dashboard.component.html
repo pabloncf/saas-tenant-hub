@@ -1,0 +1,43 @@
+<div class="page">
+  <header class="page__header">
+    <h1 class="page__title">Dashboard</h1>
+  </header>
+
+  @if (loading) {
+    <div class="loading">Loading…</div>
+  } @else {
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-card__label">Total projects</span>
+        <span class="stat-card__value">{{ stats.total }}</span>
+      </div>
+      <div class="stat-card stat-card--active">
+        <span class="stat-card__label">Active</span>
+        <span class="stat-card__value">{{ stats.active }}</span>
+      </div>
+      <div class="stat-card stat-card--paused">
+        <span class="stat-card__label">Paused</span>
+        <span class="stat-card__value">{{ stats.paused }}</span>
+      </div>
+      <div class="stat-card stat-card--done">
+        <span class="stat-card__label">Done</span>
+        <span class="stat-card__value">{{ stats.done }}</span>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h2 class="chart-card__title">Project status</h2>
+      @if (stats.total > 0) {
+        <div class="chart-card__canvas">
+          <canvas baseChart
+            [data]="chartData"
+            [type]="'doughnut'"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      } @else {
+        <p class="chart-card__empty">No projects yet. <a href="/projects">Create one →</a></p>
+      }
+    </div>
+  }
+</div>
