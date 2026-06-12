@@ -25,3 +25,8 @@ Thumbs.db
 frontend/node_modules/
 frontend/dist/
 frontend/.angular/
+
+# AI Agents / Planning
+.claude/
+CLAUDE.md
+PLANNING.md
