@@ -21,7 +21,7 @@ backend/src/main/resources/application-secrets.yml
 .DS_Store
 Thumbs.db
 
-# Node / Angular (Phase 6)
+# Node / Angular
 frontend/node_modules/
 frontend/dist/
 frontend/.angular/
