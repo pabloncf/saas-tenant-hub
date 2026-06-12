@@ -1,5 +1,7 @@
 package com.pabloncf.saas.dashboard.project;
 
+import com.pabloncf.saas.common.domain.Organization;
+import com.pabloncf.saas.common.domain.OrganizationRepository;
 import com.pabloncf.saas.dashboard.activity.ActivityLogService;
 import com.pabloncf.saas.dashboard.project.dto.ProjectRequest;
 import com.pabloncf.saas.dashboard.project.dto.ProjectResponse;
@@ -21,13 +23,16 @@ public class ProjectService {
     private final ProjectRepository     projectRepository;
     private final ProjectMapper         projectMapper;
     private final ActivityLogService    activityLogService;
+    private final OrganizationRepository orgRepository;
 
     public ProjectService(ProjectRepository projectRepository,
                           ProjectMapper projectMapper,
-                          ActivityLogService activityLogService) {
+                          ActivityLogService activityLogService,
+                          OrganizationRepository orgRepository) {
         this.projectRepository  = projectRepository;
         this.projectMapper      = projectMapper;
         this.activityLogService = activityLogService;
+        this.orgRepository      = orgRepository;
     }
 
     @Transactional(readOnly = true)
@@ -47,6 +52,15 @@ public class ProjectService {
 
     @Transactional
     public ProjectResponse create(ProjectRequest request) {
+        Organization org = orgRepository.findById(TenantContext.getCurrentTenant())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Organization not found"));
+
+        long projectCount = projectRepository.count();
+        if (!org.getSubscriptionTier().allowsMoreProjects(projectCount)) {
+            throw new ResponseStatusException(HttpStatus.PAYMENT_REQUIRED,
+                    "Project limit reached for " + org.getSubscriptionTier() + " plan. Upgrade to create more projects.");
+        }
+
         Project project = projectMapper.toEntity(request);
         project.initTenant(TenantContext.getCurrentTenant());
         Project saved = projectRepository.save(project);

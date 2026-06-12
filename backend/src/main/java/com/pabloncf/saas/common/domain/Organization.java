@@ -1,7 +1,10 @@
 package com.pabloncf.saas.common.domain;
 
+import com.pabloncf.saas.billing.SubscriptionTier;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,6 +28,16 @@ public class Organization {
 
     @Column(nullable = false, unique = true, length = 100)
     private String slug;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "subscription_tier", nullable = false, length = 20)
+    private SubscriptionTier subscriptionTier = SubscriptionTier.FREE;
+
+    @Column(name = "stripe_customer_id")
+    private String stripeCustomerId;
+
+    @Column(name = "stripe_subscription_id")
+    private String stripeSubscriptionId;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
@@ -50,9 +63,16 @@ public class Organization {
         updatedAt = OffsetDateTime.now();
     }
 
-    public UUID getId() { return id; }
-    public String getName() { return name; }
-    public String getSlug() { return slug; }
-    public OffsetDateTime getCreatedAt() { return createdAt; }
-    public OffsetDateTime getUpdatedAt() { return updatedAt; }
+    public UUID             getId()                   { return id;                   }
+    public String           getName()                 { return name;                 }
+    public String           getSlug()                 { return slug;                 }
+    public SubscriptionTier getSubscriptionTier()     { return subscriptionTier;     }
+    public String           getStripeCustomerId()     { return stripeCustomerId;     }
+    public String           getStripeSubscriptionId() { return stripeSubscriptionId; }
+    public OffsetDateTime   getCreatedAt()            { return createdAt;            }
+    public OffsetDateTime   getUpdatedAt()            { return updatedAt;            }
+
+    public void setSubscriptionTier(SubscriptionTier tier)      { this.subscriptionTier     = tier;             }
+    public void setStripeCustomerId(String stripeCustomerId)     { this.stripeCustomerId     = stripeCustomerId; }
+    public void setStripeSubscriptionId(String subscriptionId)   { this.stripeSubscriptionId = subscriptionId;   }
 }

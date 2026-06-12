@@ -34,3 +34,13 @@ jwt:
   secret: ${JWT_SECRET:ZGV2LXNlY3JldC1rZXktdGhhdC1pcy1sb25nLWVub3VnaC1mb3ItaHMyNTYtc2lnbmluZy1hbGdvcml0aG0=}
   expiration: ${JWT_EXPIRATION:900000}               # 15 minutes
   refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000}  # 7 days
+
+stripe:
+  secret-key: ${STRIPE_SECRET_KEY:sk_test_placeholder}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET:whsec_placeholder}
+  price-ids:
+    pro: ${STRIPE_PRICE_PRO:price_pro_placeholder}
+    enterprise: ${STRIPE_PRICE_ENTERPRISE:price_enterprise_placeholder}
+
+app:
+  base-url: ${APP_BASE_URL:http://localhost:4200}
