@@ -4,6 +4,7 @@ spring:
     username: saas_app
     password: saas_app_pass
   flyway:
+    url: jdbc:postgresql://postgres:5432/saas_dashboard
     user: saas_user
     password: saas_pass
 

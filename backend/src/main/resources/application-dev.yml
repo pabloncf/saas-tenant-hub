@@ -9,7 +9,10 @@ spring:
       hibernate:
         format_sql: true
   flyway:
-    # Flyway uses the admin user to run DDL migrations (saas_app cannot CREATE TABLE)
+    # Explicit URL so Flyway builds its own datasource independently of the primary one.
+    # Without this, FlywayAutoConfiguration copies the primary DataSource (TenantAwareDataSource)
+    # and fails because that wrapper has no setUrl() method.
+    url: jdbc:postgresql://localhost:5432/saas_dashboard
     user: saas_user
     password: saas_pass
     clean-on-validation-error: true
