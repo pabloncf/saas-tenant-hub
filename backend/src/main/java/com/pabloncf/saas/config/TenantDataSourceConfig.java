@@ -2,12 +2,14 @@ package com.pabloncf.saas.config;
 
 import com.pabloncf.saas.tenant.TenantAwareDataSource;
 import com.zaxxer.hikari.HikariDataSource;
+import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -51,6 +53,16 @@ public class TenantDataSourceConfig {
         hikari.setMaximumPoolSize(5);
 
         return hikari;
+    }
+
+    // Primary JPA transaction manager — used by all @Transactional without an explicit qualifier.
+    // Must be declared explicitly because adminTransactionManager below causes Spring Boot's
+    // JpaTransactionManagerAutoConfiguration to back off (@ConditionalOnMissingBean), leaving
+    // no bean named 'transactionManager' and breaking every service-layer transaction.
+    @Bean
+    @Primary
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+        return new JpaTransactionManager(emf);
     }
 
     @Bean
