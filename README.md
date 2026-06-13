@@ -157,14 +157,16 @@ npm start
 # Available at http://localhost:4200
 ```
 
-**Default admin account (seeded on first run):**
+**Test accounts (seeded on first run) — all passwords: `Admin@123`**
 
-| Field | Value |
-|---|---|
-| Email | `admin@demo.com` |
-| Password | `Admin@123` |
-| Role | OWNER |
-| Organization | Demo Organization |
+| Email | Role | Organization | Plan |
+|---|---|---|---|
+| `admin@demo.com` | OWNER | Demo Organization | FREE |
+| `owner@acme.com` | OWNER | Acme Corp | PRO |
+| `dev@acme.com` | MEMBER | Acme Corp | PRO |
+| `viewer@acme.com` | VIEWER | Acme Corp | PRO |
+| `owner@globex.com` | OWNER | Globex Inc | FREE |
+| `admin@globex.com` | ADMIN | Globex Inc | FREE |
 
 **Run tests:**
 ```bash
