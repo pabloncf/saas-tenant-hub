@@ -10,6 +10,7 @@ import com.stripe.net.Webhook;
 import com.stripe.model.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcOperations;
@@ -29,6 +30,7 @@ public class StripeWebhookHandler {
     private final StripeConfig   stripeConfig;
 
     // Production constructor — Spring uses adminDataSource (saas_user, bypasses RLS)
+    @Autowired
     public StripeWebhookHandler(
             @Qualifier("adminDataSource") DataSource adminDataSource,
             StripeConfig stripeConfig) {
