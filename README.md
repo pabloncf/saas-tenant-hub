@@ -153,9 +153,18 @@ cd backend
 ```bash
 cd frontend
 npm install
-ng serve --proxy-config proxy.conf.json
+npm start
 # Available at http://localhost:4200
 ```
+
+**Default admin account (seeded on first run):**
+
+| Field | Value |
+|---|---|
+| Email | `admin@demo.com` |
+| Password | `Admin@123` |
+| Role | OWNER |
+| Organization | Demo Organization |
 
 **Run tests:**
 ```bash
@@ -193,21 +202,6 @@ STRIPE_PRICE_ID_ENTERPRISE=price_...
 # App
 APP_BASE_URL=http://localhost:4200
 ```
-
----
-
-## Project Status
-
-| Phase | Status | Description |
-|---|---|---|
-| 1 | ✅ | Docker, PostgreSQL, Flyway migrations, RLS setup |
-| 2 | ✅ | JWT auth, refresh token rotation, registration/login |
-| 3 | ✅ | Projects CRUD + Activity Log |
-| 4 | ✅ | Member management with RBAC |
-| 5 | ✅ | Stripe Billing (Checkout, Portal, Webhooks, tier enforcement) |
-| 6 | 🔄 | Angular frontend (in progress) |
-| 7 | ⏳ | Security hardening, rate limiting, full test coverage |
-| 8 | ⏳ | AWS deploy (ECS Fargate + RDS) |
 
 ---
 
